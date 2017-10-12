@@ -1,0 +1,81 @@
+W0      @SCRATCH
+W0L     _RETURN_
+W0 -W1  @READ_ROM_MEMORY.P1
+W0 -W1  @SPI_XFER_1.P2
+W0      @delay_us1.P3
+W0 -W1  @DIV3232B.P4
+W0      @delay_ms1.P5
+W1      @SCRATCH
+W1      @READ_PACKED_MEMORY.P1
+W1      @WRITE_PACKED_MEMORY.P2
+W2 -W3  @DIV3232B.P1
+W2      @SPI_XFER_1.P2
+W2      @READ_PACKED_MEMORY.P3
+W2      @WRITE_PACKED_MEMORY.P4
+W2      @READ_ROM_MEMORY.P5
+W2      @SPI_XFER_IN_1.P6
+W3      @WRITE_PACKED_MEMORY.P1
+W3      @READ_ROM_MEMORY.P2
+W3      @READ_PACKED_MEMORY.P3
+800     @SPIWRITE_1
+801     SPI_Flag
+802     Byte_Count
+803     Rx
+804     Tx
+805     Cmand
+806     ProbeID
+807     count
+808     Version
+809     TempLowDisplay
+80A     VoltageLowDisplay
+80B     TempSetPointLow
+80C     HVSetPointLow
+80D     TempHiDisplay
+80E     HVSetPointHi
+80F     TempSetPointHi
+7780-77FF Stack
+
+ROM Allocation:
+000200  @SPI_XFER_IN_1
+00022C  spi2_slave_isr
+00025A  MAIN
+00025A  @cinit1
+000296  @cinit2
+
+Project Directory:
+    C:\GitRepo\Filament-Control-U22-master\Filament Control.X\
+
+Project Files:
+    Main.c                                                  [12-Oct-17 15:40  CRC=BFED763B]
+    ..\..\..\Program Files (x86)\PICC\devices\33FJ256GP710A.h [21-Jul-17 13:47  CRC=7E46AFCA]
+
+Source signature=BC7AD5CF
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=8882
+
+Units:
+    Main (main)
+
+Compiler Settings:
+    Processor:      DSPIC33FJ256GP710A
+    Pointer Size:   16
+    ADC Range:      0-65535
+    Opt Level:      9
+    Short,Int,Long: SIGNED: 8,16,32
+    Float,Double:   32,64
+    Compile Mode:       CCS5
+    Predefined symbols:
+       #define __dsPIC33FJ256GP710A__ 1
+
+Output Files:
+    XREF file:   build\default\production\Main.xsym
+    Errors:      build\default\production\Main.err
+    Ext Symbols: build\default\production\Main.esym
+    INHX8:       build\default\production\Main.hex
+    Symbols:     build\default\production\Main.sym
+    List:        build\default\production\Main.lst
+    Debug/COFF:  build\default\production\Main.cof
+    Project:     Main.ccspjt
+    Call Tree:   build\default\production\Main.tre
+    Statistics:  build\default\production\Main.STA

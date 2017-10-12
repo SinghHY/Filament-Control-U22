@@ -1,0 +1,6 @@
+C:\GitRepo\Filament-Control-U22-master\Filament Control.X\Main.c:55:1:  Warning#203  Condition always TRUE
+C:\GitRepo\Filament-Control-U22-master\Filament Control.X\Main.c:19:40:  Warning#202  Variable never used:   Tx
+C:\GitRepo\Filament-Control-U22-master\Filament Control.X\Main.c:19:64:  Warning#202  Variable never used:   count
+      Memory usage:   ROM=1%      RAM=0% - 0%
+      0 Errors,  3 Warnings.
+Build Successful.

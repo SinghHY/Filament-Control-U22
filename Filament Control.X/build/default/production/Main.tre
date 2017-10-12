@@ -1,0 +1,5 @@
+ÀÄFilament Control
+   ÃÄMAIN  0/350  Ram=0
+   ³  ÀÄ@cinit1  (Inline)  Ram=0
+   ÀÄspi2_slave_isr  0/46  Ram=0
+      ÀÄ@SPI_XFER_IN_1  0/44  Ram=5
