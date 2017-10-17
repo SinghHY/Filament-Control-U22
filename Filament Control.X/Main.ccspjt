@@ -9,6 +9,8 @@ FileList=Main.c
 Type=4
 [mru-list]
 1=build\default\production\Main.c
+[build\default\debug\Main.c]
+Type=4
 [Units]
 Count=1
 1=Main (main)

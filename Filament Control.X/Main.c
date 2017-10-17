@@ -1,7 +1,7 @@
 /**********************************************************************
-* Reading ADC with timer interrupt.
+* Filament Control for dsPIC
 * © Harpreet Singh, 2017
-* This version uses interrupts to free up the processor. 
+* Version  = 77 
 * FileName:        main.c
 * Dependencies:    Header (33FJ256GP710A.h) files
 * Processor:       dsPIC33FJ256GP710A
@@ -10,11 +10,10 @@
 ************************************************************************/
 
 #include <33FJ256GP710A.h>
-#fuses HS,NOWDT,NOPROTECT
-#use delay(crystal = 8Mhz)
+#fuses XT,NOWDT,NOPROTECT
+#use delay(crystal = 8Mhz, clock = 100Mhz)
 #use spi(SLAVE, SPI2, BITS = 8, MODE = 1, ENABLE = PIN_G9, stream = SPI_2)
 
-#define GREEN_LED PIN_F6
 
 int8 SPI_Flag = 0, Byte_Count = 0, Rx, Tx, Cmand, ProbeID = 1, count = 0;
 int8 Version = 0x77, TempLowDisplay, VoltageLowDisplay, TempSetPointLow, HVSetPointLow, TempHiDisplay;
@@ -26,39 +25,8 @@ void spi2_slave_isr(void)
 {
   Rx = spi_xfer_in(SPI_2, 8);
   Byte_Count++; 
-  SPI_Flag = 1;
-
-}
-
-
-
-
-void main()
-{    
-    
-    
-    //Frequency set up for PWM    
-    setup_timer2(TMR_INTERNAL | TMR_DIV_BY_1, 39);
-    setup_compare(3, COMPARE_PWM | COMPARE_TIMER2);
-    
-    
-   enable_interrupts(INT_SPI2);
-   enable_interrupts(INTR_GLOBAL);
-
-   TempLowDisplay = 0;
-   VoltageLowDisplay = 0;
-    
-   
-   set_pwm_duty(3,10);
-   
-   
-   while(1)
-    {
-       if(SPI_Flag) 
-       {
-         SPI_Flag = 0;
-
-         switch(Byte_Count)
+  
+  switch(Byte_Count)
             {
             case 1:
                 spi_prewrite(Version);
@@ -74,9 +42,9 @@ void main()
                 if(Cmand == 1)
                    spi_prewrite(TempLowDisplay);
                 else if(Cmand == 2)
-                   spi_prewrite(VoltageLowDisplay);
+                        spi_prewrite(VoltageLowDisplay);
                 else if(Cmand == 3)
-                   spi_prewrite(ProbeID);
+                        spi_prewrite(ProbeID);
                 
                 break;
             
@@ -103,6 +71,25 @@ void main()
              
             }
 
-        }
+}
+
+
+
+
+void main()
+{    
+
+   enable_interrupts(INT_SPI2);
+   enable_interrupts(INTR_GLOBAL);
+
+   output_float(PIN_G9); // SS as an input
+   
+   TempLowDisplay = 0;
+   VoltageLowDisplay = 0;
+   TempHiDisplay = 1;
+    
+   while(1)
+    {
+
     }
 }   

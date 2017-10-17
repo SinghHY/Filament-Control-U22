@@ -1,8 +1,8 @@
-CCS PCD C Compiler, Version 5.074, 35380               12-Oct-17 15:40
+CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 
-               Filename:   C:\GitRepo\Filament-Control-U22-master\Filament Control.X\build\default\production\Main.lst
+               Filename:   C:\GitRepo\Filament-Control-U22\Filament Control.X\build\default\production\Main.lst
 
-               ROM used:   952 bytes (1%)
+               ROM used:   966 bytes (1%)
                            Largest free fragment is 65536
                RAM used:   144 (0%) at main() level
                            144 (0%) worst case
@@ -10,11 +10,11 @@ CCS PCD C Compiler, Version 5.074, 35380               12-Oct-17 15:40
                Stack size: 128
 
 *
-00000:  GOTO    25A
+00000:  GOTO    34E
 *
 00056:  DATA    2C,02,00
 .................... /********************************************************************** 
-.................... * Reading ADC with timer interrupt. 
+.................... * Filament Control for dsPIC 
 .................... * © Harpreet Singh, 2017 
 .................... * This version uses interrupts to free up the processor.  
 .................... * FileName:        main.c 
@@ -39,8 +39,8 @@ CCS PCD C Compiler, Version 5.074, 35380               12-Oct-17 15:40
 ....................  
 .................... #list 
 ....................  
-.................... #fuses HS,NOWDT,NOPROTECT 
-.................... #use delay(crystal = 8Mhz) 
+.................... #fuses XT,NOWDT,NOPROTECT 
+.................... #use delay(crystal = 8Mhz, clock = 100Mhz) 
 .................... #use spi(SLAVE, SPI2, BITS = 8, MODE = 1, ENABLE = PIN_G9, stream = SPI_2) 
 *
 00200:  MOV     W5,[W15++]
@@ -66,7 +66,6 @@ CCS PCD C Compiler, Version 5.074, 35380               12-Oct-17 15:40
 00228:  MOV     [--W15],W5
 0022A:  RETURN  
 ....................  
-.................... #define GREEN_LED PIN_F6 
 ....................  
 .................... int8 SPI_Flag = 0, Byte_Count = 0, Rx, Tx, Cmand, ProbeID = 1, count = 0; 
 .................... int8 Version = 0x77, TempLowDisplay, VoltageLowDisplay, TempSetPointLow, HVSetPointLow, TempHiDisplay; 
@@ -89,262 +88,257 @@ CCS PCD C Compiler, Version 5.074, 35380               12-Oct-17 15:40
 00240:  MOV.B   W0L,803
 ....................   Byte_Count++;  
 00242:  INC.B   0802
-....................   SPI_Flag = 1; 
-00244:  MOV.B   #1,W0L
-00246:  MOV.B   W0L,801
+....................    
+....................   switch(Byte_Count) 
+00244:  MOV.B   802,W0L
+00246:  SE      W0,W0
+00248:  XOR     #1,W0
+0024A:  BRA     Z,25A
+0024C:  XOR     #3,W0
+0024E:  BRA     Z,286
+00250:  XOR     #1,W0
+00252:  BRA     Z,2D2
+00254:  XOR     #7,W0
+00256:  BRA     Z,31A
+00258:  BRA     33C
+....................             { 
+....................             case 1: 
+....................                 spi_prewrite(Version); 
+0025A:  MOV.B   808,W0L
+0025C:  MOV.B   W0L,800
+0025E:  MOV.B   800,W0L
+00260:  MOV.B   W0L,268
+00262:  MOV.B   #1,W0L
+00264:  MOV.B   W0L,800
+....................                 if(Cmand == 1) 
+00266:  MOV.B   805,W0L
+00268:  SE      W0,W0
+0026A:  CP      W0,#1
+0026C:  BRA     NZ,276
+....................                    TempSetPointLow = Rx; 
+0026E:  MOV.B   803,W0L
+00270:  MOV.B   W0L,80B
+00272:  GOTO    282
+....................                 else if(Cmand == 2) 
+00276:  MOV.B   805,W0L
+00278:  SE      W0,W0
+0027A:  CP      W0,#2
+0027C:  BRA     NZ,282
+....................                    HVSetPointLow = Rx; 
+0027E:  MOV.B   803,W0L
+00280:  MOV.B   W0L,80C
 ....................  
-00248:  BCLR.B  88.1
-0024A:  MOV     #1A,W0
-0024C:  REPEAT  #C
-0024E:  MOV     [--W15],[W0--]
-00250:  MOV     [--W15],W0
-00252:  POP     32
-00254:  POP     36
-00256:  POP     42
-00258:  RETFIE  
+....................                 break; 
+00282:  GOTO    33C
+....................        
+....................             case 2:  
+....................                 Cmand = Rx; 
+00286:  MOV.B   803,W0L
+00288:  MOV.B   W0L,805
+....................                 if(Cmand == 1) 
+0028A:  MOV.B   805,W0L
+0028C:  SE      W0,W0
+0028E:  CP      W0,#1
+00290:  BRA     NZ,2A2
+....................                    spi_prewrite(TempLowDisplay); 
+00292:  MOV.B   809,W0L
+00294:  MOV.B   W0L,800
+00296:  MOV.B   800,W0L
+00298:  MOV.B   W0L,268
+0029A:  MOV.B   #1,W0L
+0029C:  MOV.B   W0L,800
+0029E:  GOTO    2CE
+....................                 else if(Cmand == 2) 
+002A2:  MOV.B   805,W0L
+002A4:  SE      W0,W0
+002A6:  CP      W0,#2
+002A8:  BRA     NZ,2BA
+....................                         spi_prewrite(VoltageLowDisplay); 
+002AA:  MOV.B   80A,W0L
+002AC:  MOV.B   W0L,800
+002AE:  MOV.B   800,W0L
+002B0:  MOV.B   W0L,268
+002B2:  MOV.B   #1,W0L
+002B4:  MOV.B   W0L,800
+002B6:  GOTO    2CE
+....................                 else if(Cmand == 3) 
+002BA:  MOV.B   805,W0L
+002BC:  SE      W0,W0
+002BE:  CP      W0,#3
+002C0:  BRA     NZ,2CE
+....................                         spi_prewrite(ProbeID); 
+002C2:  MOV.B   806,W0L
+002C4:  MOV.B   W0L,800
+002C6:  MOV.B   800,W0L
+002C8:  MOV.B   W0L,268
+002CA:  MOV.B   #1,W0L
+002CC:  MOV.B   W0L,800
+....................                  
+....................                 break; 
+002CE:  GOTO    33C
+....................              
+....................              
+....................             case 3:  
+....................                   
+....................                 if(Cmand == 1) 
+002D2:  MOV.B   805,W0L
+002D4:  SE      W0,W0
+002D6:  CP      W0,#1
+002D8:  BRA     NZ,2EA
+....................                    spi_prewrite(TempHiDisplay); 
+002DA:  MOV.B   80D,W0L
+002DC:  MOV.B   W0L,800
+002DE:  MOV.B   800,W0L
+002E0:  MOV.B   W0L,268
+002E2:  MOV.B   #1,W0L
+002E4:  MOV.B   W0L,800
+002E6:  GOTO    316
+....................                 else if(Cmand == 2) 
+002EA:  MOV.B   805,W0L
+002EC:  SE      W0,W0
+002EE:  CP      W0,#2
+002F0:  BRA     NZ,302
+....................                    spi_prewrite(SPI_Flag); 
+002F2:  MOV.B   801,W0L
+002F4:  MOV.B   W0L,800
+002F6:  MOV.B   800,W0L
+002F8:  MOV.B   W0L,268
+002FA:  MOV.B   #1,W0L
+002FC:  MOV.B   W0L,800
+002FE:  GOTO    316
+....................                 else if(Cmand == 3) 
+00302:  MOV.B   805,W0L
+00304:  SE      W0,W0
+00306:  CP      W0,#3
+00308:  BRA     NZ,316
+....................                    spi_prewrite(SPI_Flag); 
+0030A:  MOV.B   801,W0L
+0030C:  MOV.B   W0L,800
+0030E:  MOV.B   800,W0L
+00310:  MOV.B   W0L,268
+00312:  MOV.B   #1,W0L
+00314:  MOV.B   W0L,800
+....................                 break;       
+00316:  GOTO    33C
+....................              
+....................              
+....................             case 4:  
+....................                 if(Cmand == 1) 
+0031A:  MOV.B   805,W0L
+0031C:  SE      W0,W0
+0031E:  CP      W0,#1
+00320:  BRA     NZ,32A
+....................                    TempSetPointHi = Rx; 
+00322:  MOV.B   803,W0L
+00324:  MOV.B   W0L,80F
+00326:  GOTO    336
+....................                 else if(Cmand == 2) 
+0032A:  MOV.B   805,W0L
+0032C:  SE      W0,W0
+0032E:  CP      W0,#2
+00330:  BRA     NZ,336
+....................                     HVSetPointHi = Rx; 
+00332:  MOV.B   803,W0L
+00334:  MOV.B   W0L,80E
+....................                  
+....................                 Byte_Count = 0; 
+00336:  CLR.B   802
+....................                 break; 
+00338:  GOTO    33C
+....................               
+....................             } 
+....................  
+0033C:  BCLR.B  88.1
+0033E:  MOV     #1A,W0
+00340:  REPEAT  #C
+00342:  MOV     [--W15],[W0--]
+00344:  MOV     [--W15],W0
+00346:  POP     32
+00348:  POP     36
+0034A:  POP     42
+0034C:  RETFIE  
 .................... } 
 ....................  
 ....................  
 ....................  
 ....................  
 .................... void main() 
-0025A:  MOV     #7780,W15
-0025C:  MOV     #77FF,W0
-0025E:  MOV     W0,20
-00260:  NOP     
-00262:  BSET.B  81.7
-00264:  CLR.B   800
-00266:  BCLR.B  261.7
-00268:  BCLR.B  2E5.0
-0026A:  BSET.B  2E4.7
-0026C:  BSET.B  2E5.1
-0026E:  BSET.B  2E4.6
-00270:  BCLR.B  260.6
-00272:  BCLR.B  263.1
-00274:  CLR     268
-00276:  MOV     #109F,W4
-00278:  MOV     W4,262
-0027A:  BSET.B  261.7
-0027C:  BCLR.B  2E5.1
-0027E:  BSET.B  2E9.1
-00280:  CLR.B   801
-00282:  CLR.B   802
-00284:  MOV.B   #1,W0L
-00286:  MOV.B   W0L,806
-00288:  CLR.B   807
-0028A:  MOV.B   #77,W0L
-0028C:  MOV.B   W0L,808
-0028E:  SETM    32C
-00290:  SETM    32A
-00292:  SETM    36C
-00294:  SETM    36A
+0034E:  MOV     #7780,W15
+00350:  MOV     #77FF,W0
+00352:  MOV     W0,20
+00354:  NOP     
+00356:  BSET.B  81.7
+00358:  MOV     #30,W4
+0035A:  MOV     W4,746
+0035C:  CLR     744
+0035E:  DISI    #E
+00360:  MOV     #103,W0
+00362:  MOV     #743,W1
+00364:  MOV     #78,W2
+00366:  MOV     #9A,W3
+00368:  MOV.B   W2L,[W1]
+0036A:  MOV.B   W3L,[W1]
+0036C:  MOV.B   W0L,743
+0036E:  LSR     W0,#8,W0
+00370:  MOV     #742,W1
+00372:  MOV     #46,W2
+00374:  MOV     #57,W3
+00376:  MOV.B   W2L,[W1]
+00378:  MOV.B   W3L,[W1]
+0037A:  MOV.B   W0L,[W1]
+0037C:  CLR.B   800
+0037E:  BCLR.B  261.7
+00380:  BCLR.B  2E5.0
+00382:  BSET.B  2E4.7
+00384:  BSET.B  2E5.1
+00386:  BSET.B  2E4.6
+00388:  BCLR.B  260.6
+0038A:  BCLR.B  263.1
+0038C:  CLR     268
+0038E:  MOV     #1097,W4
+00390:  MOV     W4,262
+00392:  BSET.B  261.7
+00394:  BCLR.B  2E5.1
+00396:  BSET.B  2E9.1
+00398:  CLR.B   801
+0039A:  CLR.B   802
+0039C:  MOV.B   #1,W0L
+0039E:  MOV.B   W0L,806
+003A0:  CLR.B   807
+003A2:  MOV.B   #77,W0L
+003A4:  MOV.B   W0L,808
+003A6:  SETM    32C
+003A8:  SETM    32A
+003AA:  SETM    36C
+003AC:  SETM    36A
 .................... {     
-....................      
-....................      
-....................     //Frequency set up for PWM     
-....................     setup_timer2(TMR_INTERNAL | TMR_DIV_BY_1, 39); 
-00296:  CLR     110
-00298:  MOV     #27,W4
-0029A:  MOV     W4,10C
-0029C:  MOV     #8000,W4
-0029E:  MOV     W4,110
-....................     setup_compare(3, COMPARE_PWM | COMPARE_TIMER2); 
-002A0:  MOV     #6,W4
-002A2:  MOV     W4,190
-....................      
-....................      
-....................    enable_interrupts(INT_SPI2); 
-002A4:  BSET.B  98.1
-....................    enable_interrupts(INTR_GLOBAL); 
-002A6:  BCLR.B  81.7
-002A8:  CLR     42
-002AA:  BSET.B  81.7
 ....................  
+....................    enable_interrupts(INT_SPI2); 
+003AE:  BSET.B  98.1
+....................    enable_interrupts(INTR_GLOBAL); 
+003B0:  BCLR.B  81.7
+003B2:  CLR     42
+003B4:  BSET.B  81.7
+....................  
+....................    output_float(PIN_G9); // SS as an input 
+003B6:  BSET.B  2E5.1
+....................     
 ....................    TempLowDisplay = 0; 
-002AC:  CLR.B   809
+003B8:  CLR.B   809
 ....................    VoltageLowDisplay = 0; 
-002AE:  CLR.B   80A
+003BA:  CLR.B   80A
+....................    TempHiDisplay = 1; 
+003BC:  MOV.B   #1,W0L
+003BE:  MOV.B   W0L,80D
 ....................      
-....................     
-....................    set_pwm_duty(3,10); 
-002B0:  MOV     #A,W4
-002B2:  MOV     W4,18C
-....................     
-....................     
 ....................    while(1) 
 ....................     { 
-....................        if(SPI_Flag)  
-002B4:  CP0.B   801
-002B6:  BRA     Z,3B2
-....................        { 
-....................          SPI_Flag = 0; 
-002B8:  CLR.B   801
+003C0:  GOTO    3C0
 ....................  
-....................          switch(Byte_Count) 
-002BA:  MOV.B   802,W0L
-002BC:  SE      W0,W0
-002BE:  XOR     #1,W0
-002C0:  BRA     Z,2D0
-002C2:  XOR     #3,W0
-002C4:  BRA     Z,2FC
-002C6:  XOR     #1,W0
-002C8:  BRA     Z,348
-002CA:  XOR     #7,W0
-002CC:  BRA     Z,390
-002CE:  BRA     3B2
-....................             { 
-....................             case 1: 
-....................                 spi_prewrite(Version); 
-002D0:  MOV.B   808,W0L
-002D2:  MOV.B   W0L,800
-002D4:  MOV.B   800,W0L
-002D6:  MOV.B   W0L,268
-002D8:  MOV.B   #1,W0L
-002DA:  MOV.B   W0L,800
-....................                 if(Cmand == 1) 
-002DC:  MOV.B   805,W0L
-002DE:  SE      W0,W0
-002E0:  CP      W0,#1
-002E2:  BRA     NZ,2EC
-....................                    TempSetPointLow = Rx; 
-002E4:  MOV.B   803,W0L
-002E6:  MOV.B   W0L,80B
-002E8:  GOTO    2F8
-....................                 else if(Cmand == 2) 
-002EC:  MOV.B   805,W0L
-002EE:  SE      W0,W0
-002F0:  CP      W0,#2
-002F2:  BRA     NZ,2F8
-....................                    HVSetPointLow = Rx; 
-002F4:  MOV.B   803,W0L
-002F6:  MOV.B   W0L,80C
-....................  
-....................                 break; 
-002F8:  GOTO    3B2
-....................        
-....................             case 2:  
-....................                 Cmand = Rx; 
-002FC:  MOV.B   803,W0L
-002FE:  MOV.B   W0L,805
-....................                 if(Cmand == 1) 
-00300:  MOV.B   805,W0L
-00302:  SE      W0,W0
-00304:  CP      W0,#1
-00306:  BRA     NZ,318
-....................                    spi_prewrite(TempLowDisplay); 
-00308:  MOV.B   809,W0L
-0030A:  MOV.B   W0L,800
-0030C:  MOV.B   800,W0L
-0030E:  MOV.B   W0L,268
-00310:  MOV.B   #1,W0L
-00312:  MOV.B   W0L,800
-00314:  GOTO    344
-....................                 else if(Cmand == 2) 
-00318:  MOV.B   805,W0L
-0031A:  SE      W0,W0
-0031C:  CP      W0,#2
-0031E:  BRA     NZ,330
-....................                    spi_prewrite(VoltageLowDisplay); 
-00320:  MOV.B   80A,W0L
-00322:  MOV.B   W0L,800
-00324:  MOV.B   800,W0L
-00326:  MOV.B   W0L,268
-00328:  MOV.B   #1,W0L
-0032A:  MOV.B   W0L,800
-0032C:  GOTO    344
-....................                 else if(Cmand == 3) 
-00330:  MOV.B   805,W0L
-00332:  SE      W0,W0
-00334:  CP      W0,#3
-00336:  BRA     NZ,344
-....................                    spi_prewrite(ProbeID); 
-00338:  MOV.B   806,W0L
-0033A:  MOV.B   W0L,800
-0033C:  MOV.B   800,W0L
-0033E:  MOV.B   W0L,268
-00340:  MOV.B   #1,W0L
-00342:  MOV.B   W0L,800
-....................                  
-....................                 break; 
-00344:  GOTO    3B2
-....................              
-....................              
-....................             case 3:  
-....................                   
-....................                 if(Cmand == 1) 
-00348:  MOV.B   805,W0L
-0034A:  SE      W0,W0
-0034C:  CP      W0,#1
-0034E:  BRA     NZ,360
-....................                    spi_prewrite(TempHiDisplay); 
-00350:  MOV.B   80D,W0L
-00352:  MOV.B   W0L,800
-00354:  MOV.B   800,W0L
-00356:  MOV.B   W0L,268
-00358:  MOV.B   #1,W0L
-0035A:  MOV.B   W0L,800
-0035C:  GOTO    38C
-....................                 else if(Cmand == 2) 
-00360:  MOV.B   805,W0L
-00362:  SE      W0,W0
-00364:  CP      W0,#2
-00366:  BRA     NZ,378
-....................                    spi_prewrite(SPI_Flag); 
-00368:  MOV.B   801,W0L
-0036A:  MOV.B   W0L,800
-0036C:  MOV.B   800,W0L
-0036E:  MOV.B   W0L,268
-00370:  MOV.B   #1,W0L
-00372:  MOV.B   W0L,800
-00374:  GOTO    38C
-....................                 else if(Cmand == 3) 
-00378:  MOV.B   805,W0L
-0037A:  SE      W0,W0
-0037C:  CP      W0,#3
-0037E:  BRA     NZ,38C
-....................                    spi_prewrite(SPI_Flag); 
-00380:  MOV.B   801,W0L
-00382:  MOV.B   W0L,800
-00384:  MOV.B   800,W0L
-00386:  MOV.B   W0L,268
-00388:  MOV.B   #1,W0L
-0038A:  MOV.B   W0L,800
-....................                 break;       
-0038C:  GOTO    3B2
-....................              
-....................              
-....................             case 4:  
-....................                 if(Cmand == 1) 
-00390:  MOV.B   805,W0L
-00392:  SE      W0,W0
-00394:  CP      W0,#1
-00396:  BRA     NZ,3A0
-....................                    TempSetPointHi = Rx; 
-00398:  MOV.B   803,W0L
-0039A:  MOV.B   W0L,80F
-0039C:  GOTO    3AC
-....................                 else if(Cmand == 2) 
-003A0:  MOV.B   805,W0L
-003A2:  SE      W0,W0
-003A4:  CP      W0,#2
-003A6:  BRA     NZ,3AC
-....................                     HVSetPointHi = Rx; 
-003A8:  MOV.B   803,W0L
-003AA:  MOV.B   W0L,80E
-....................                  
-....................                 Byte_Count = 0; 
-003AC:  CLR.B   802
-....................                 break; 
-003AE:  GOTO    3B2
-....................               
-....................             } 
-....................  
-....................         } 
-003B2:  GOTO    2B4
 ....................     } 
 .................... }    
 *
-003B6:  PWRSAV  #0
+003C4:  PWRSAV  #0
 
 Configuration Fuses:
    Word  1L: 00CF   NOWRTB NOBSS NORBS
@@ -353,9 +347,9 @@ Configuration Fuses:
           H: 0000  
    Word  3L: 0007   NOWRT NOPROTECT
           H: 0000  
-   Word  4L: 0082   PR IESO
+   Word  4L: 0080   FRC IESO
           H: 0000  
-   Word  5L: 00C1   XT OSCIO
+   Word  5L: 0041   XT OSCIO CKSNOFSM
           H: 0000  
    Word  6L: 005F   WPOSTS16 WPRES128 WINDIS NOWDT
           H: 0000  
