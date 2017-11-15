@@ -10,14 +10,21 @@
 ************************************************************************/
 
 #include <33FJ256GP710A.h>
+#device ADC = 12 //enable it for 4095
 #fuses XT,NOWDT,NOPROTECT
 #use delay(crystal = 8Mhz, clock = 100Mhz)
 #use spi(SLAVE, SPI2, BITS = 8, MODE = 1, ENABLE = PIN_G9, stream = SPI_2)
 
+#define Heater1 PIN_F2
+#define Heater2 PIN_F3
+#define Heater3 PIN_F4
+#define Heater4 PIN_F5
 
-int8 SPI_Flag = 0, Byte_Count = 0, Rx, Tx, Cmand, ProbeID = 1, count = 0;
+int8 SPI_Flag = 0, Byte_Count = 0, Rx, Tx, Cmand, ProbeID = 2, count = 0;
 int8 Version = 0x77, TempLowDisplay, VoltageLowDisplay, TempSetPointLow, HVSetPointLow, TempHiDisplay;
+float Current, Alpha = 0.0024169921875;  //
 int8  HVSetPointHi, TempSetPointHi;
+int Value;
 
 #INT_SPI2
 
@@ -78,11 +85,18 @@ void spi2_slave_isr(void)
 
 void main()
 {    
-
+   output_float(PIN_G9); // SS as an input
+   setup_adc_ports(sAN0 | sAN2 | sAN3| sAN4, VSS_VDD);
+   setup_adc(ADC_CLOCK_INTERNAL);
+   set_adc_channel(3);
+    
    enable_interrupts(INT_SPI2);
    enable_interrupts(INTR_GLOBAL);
 
-   output_float(PIN_G9); // SS as an input
+   output_low(Heater1);
+   output_low(Heater2);
+   output_low(Heater3);
+   output_low(Heater4);
    
    TempLowDisplay = 0;
    VoltageLowDisplay = 0;
@@ -90,6 +104,21 @@ void main()
     
    while(1)
     {
-
+       //Value = read_adc();
+       //Current = Value * Alpha;
+        delay_ms(1000);
+       
+        output_low(Heater1);
+        output_low(Heater2);
+        output_low(Heater3);
+        output_low(Heater4);
+        
+        delay_ms(1000);
+        
+        output_high(Heater1);
+        output_high(Heater2);
+        output_high(Heater3);
+        output_high(Heater4);
+       
     }
 }   
