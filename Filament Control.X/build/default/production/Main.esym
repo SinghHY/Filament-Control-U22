@@ -1,17 +1,11 @@
 D G "__PCD__" 0 0 ""5.074""
 D G "__DEVICE__" 0 0 ""
-D G "__DATE__" 0 0 ""17-Oct-17""
-D G "__TIME__" 0 0 ""16:23:01""
+D G "__DATE__" 0 0 ""22-Nov-17""
+D G "__TIME__" 0 0 ""16:25:40""
 D G "_UNICODE" 0 0 ""?""
 D G "__EVAL" 0 0 ""?""
-D G "__dsPIC33FJ256GP710A__" 0 0 "1" "* Filament Control for dsPIC"
-C G "" 0 1 1 "*"
-C G "" 0 1 1 "*"
-C G "" 0 1 1 "*"
-C G "" 0 1 1 "*"
-C G "" 0 1 1 "*"
-C G "" 0 1 1 "*"
-c L "set_tris_a" 1 1 6 "FUNCTION"
+D G "__dsPIC33FJ256GP710A__" 0 0 "1" "Standard Header file for the DSPIC33FJ256GP710A device ////////////////"
+c L "set_tris_a" 1 3 6 "FUNCTION"
 f N "set_tris_a" 1 47 ""
 v L "value" 1 47 "int16" `54 
 f B "set_tris_a" 1 47 "void(int16 value)" `53 
@@ -231,7 +225,7 @@ d G "putc" 1 198 "putchar"
 d G "fputc" 1 199 "putchar"
 d G "fgets" 1 200 "gets"
 d G "fputs" 1 201 "puts"
-c L "output_drive" 1 1 2 "FUNCTION"
+c L "output_drive" 1 3 2 "FUNCTION"
 f N "setup_uart" 1 205 ""
 v L "baud" 1 205 "int32" `130 
 f B "setup_uart" 1 205 "void(int32 baud)" `129 
@@ -262,7 +256,7 @@ d G "UART_AUTODETECT" 1 216 "8"
 d G "UART_AUTODETECT_NOWAIT" 1 217 "9"
 d G "UART_WAKEUP_ON_RDA" 1 218 "10"
 d G "UART_SEND_BREAK" 1 219 "13"
-c L "set_uart_speed" 1 1 3 "FUNCTION"
+c L "set_uart_speed" 1 3 3 "FUNCTION"
 f N "setup_wdt" 1 224 ""
 v L "mode" 1 224 "int8" `148 
 f B "setup_wdt" 1 224 "void(int8 mode)" `147 
@@ -288,7 +282,7 @@ d G "WDT_16S" 1 244 "0x010"
 d G "WDT_33S" 1 245 "0x011"
 d G "WDT_65S" 1 246 "0x030"
 d G "WDT_131S" 1 247 "0x031"
-c L "restart_wdt" 1 1 3 "FUNCTION"
+c L "restart_wdt" 1 3 3 "FUNCTION"
 f N "restart_cause" 1 252 ""
 f B "restart_cause" 1 252 "int8()" `150 
 f N "reset_cpu" 1 253 ""
@@ -307,7 +301,7 @@ d G "RESTART_ILLEGAL_OP" 1 262 "14"
 d G "RESTART_TRAP_CONFLICT" 1 263 "15"
 d G "SLEEP_FULL" 1 266 "0" "Default"
 d G "SLEEP_IDLE" 1 267 "1" "Clock and peripherals don't stop"
-c L "sleep" 1 1 2 "FUNCTION"
+c L "sleep" 1 3 2 "FUNCTION"
 f N "setup_oscillator" 1 273 ""
 v L "type" 1 273 "int8" `156 
 v L "target" 1 273 "int32" `157 
@@ -322,7 +316,7 @@ d G "OSC_CRYSTAL" 1 277 "1"
 d G "OSC_CLOCK" 1 278 "2"
 d G "OSC_RC" 1 279 "3"
 d G "OSC_SECONDARY" 1 280 "16"
-c L "setup_oscillator" 1 1 4 "FUNCTION"
+c L "setup_oscillator" 1 3 4 "FUNCTION"
 f N "setup_timer1" 1 286 ""
 v L "mode" 1 286 "int16" `163 
 f B "setup_timer1" 1 286 "void(int16 mode)" `162 
@@ -464,7 +458,7 @@ d G "TMR_HALT_IDLE" 1 344 "0x2000"
 d G "TMR_CONTINUE_IDLE" 1 345 "0x0000"
 d G "TMR_32_BIT" 1 347 "0x0008" "Only for even numbered timers"
 d G "TMR_GATE" 1 348 "0x0040"
-c L "set_timer89" 1 1 3 "FUNCTION"
+c L "set_timer89" 1 3 3 "FUNCTION"
 f N "setup_capture" 1 353 ""
 v L "module" 1 353 "int8" `247 
 v L "mode" 1 353 "int16" `248 
@@ -491,7 +485,7 @@ d G "CAPTURE_TIMER2" 1 372 "0x0080" "On capture event Timer 2 is captured"
 d G "CAPTURE_TIMER3" 1 373 "0x0000" "On capture event Timer 3 is captured"
 d G "CAPTURE_HALT_IDLE" 1 376 "0x2000" "Capture module halts during idle mode"
 d G "CAPTURE_CONTINUE_IDLE" 1 377 "0x0000" "Capture module continues during idle mode"
-c L "get_capture" 1 1 3 "FUNCTION"
+c L "get_capture" 1 3 3 "FUNCTION"
 f N "setup_compare" 1 382 ""
 v L "module" 1 382 "int8" `255 
 v L "mode" 1 382 "int16" `256 
@@ -521,7 +515,7 @@ d G "COMPARE_TIMER2" 1 397 "0x0000" "Timer 2 is the base timer"
 d G "COMPARE_TIMER3" 1 398 "0x0008" "Timer 3 is the base timer"
 d G "COMPARE_HALT_IDLE" 1 401 "0x2000" "Compare module halts during idle mode"
 d G "COMPARE_CONTINUE_IDLE" 1 402 "0x0000" "Compare module continues during idle mode"
-c L "set_compare_time" 1 1 3 "FUNCTION"
+c L "set_compare_time" 1 3 3 "FUNCTION"
 f N "setup_spi" 1 407 ""
 v L "mode" 1 407 "int16" `268 
 f B "setup_spi" 1 407 "void(int16 mode)" `267 
@@ -620,7 +614,7 @@ d G "SPI_CLK_DIV_448" 1 472 "0x0004"
 d G "SPI_CLK_DIV_512" 1 473 "0x0000"
 d G "SPI_L_TO_H" 1 476 "SPI_SCK_IDLE_LOW"
 d G "SPI_H_TO_L" 1 477 "SPI_SCK_IDLE_HIGH"
-c L "spi_data_is_in2" 1 1 4 "FUNCTION"
+c L "spi_data_is_in2" 1 3 4 "FUNCTION"
 f N "setup_adc" 1 483 ""
 v L "mode" 1 483 "int32" `306 
 f B "setup_adc" 1 483 "void(int32 mode)" `305 
@@ -726,7 +720,7 @@ d G "VSS_VDD" 1 568 "0x0000" "Range 0-Vdd"
 d G "VREF_VREF" 1 569 "0x6000" "Range VrefL-VrefH"
 d G "VREF_VDD" 1 570 "0x4000" "Range VrefL-Vdd"
 d G "VSS_VREF" 1 571 "0x2000" "Range 0-VrefH"
-c L "adc_done2" 1 1 4 "FUNCTION"
+c L "adc_done2" 1 3 4 "FUNCTION"
 f N "setup_dci" 1 577 ""
 v L "mode" 1 577 "int16" `338 
 v L "size" 1 577 "int16" `339 
@@ -839,7 +833,7 @@ d G "TRANSMIT_SLOT12" 1 694 "0x1000"
 d G "TRANSMIT_SLOT13" 1 695 "0x2000"
 d G "TRANSMIT_SLOT14" 1 696 "0x4000"
 d G "TRANSMIT_SLOT15" 1 697 "0x8000"
-c L "dci_transmit_ready" 1 1 3 "FUNCTION"
+c L "dci_transmit_ready" 1 3 3 "FUNCTION"
 f N "setup_dma" 1 703 ""
 v L "channel" 1 703 "int8" `350 
 v L "pheripheral" 1 703 "int32" `351 
@@ -912,7 +906,7 @@ d G "DMA_FORCE_NOW" 1 748 "0x100"
 d G "DMA_IN_ERROR" 1 750 "0x01"
 d G "DMA_OUT_ERROR" 1 751 "0x02"
 d G "DMA_B_SELECT" 1 752 "0x04"
-c L "dma_status" 1 1 3 "FUNCTION"
+c L "dma_status" 1 3 3 "FUNCTION"
 f N "abs" 1 758 ""
 v L "x" 1 758 "sint8" `371 
 f B "abs" 1 758 "sint8(sint8 x)" `370 
@@ -1492,7 +1486,7 @@ f B "get_capture_event" 1 949 "int8()" `752
 f N "get_capture_event" 1 950 ""
 v L "stream" 1 950 "int8" `754 
 f B "get_capture_event" 1 950 "int8(int8 stream)" `753  "Environment Prototypes:"
-c L "get_capture_event" 1 1 2 "FUNCTION"
+c L "get_capture_event" 1 3 2 "FUNCTION"
 f N "goto_address" 1 959 ""
 v L "address" 1 959 "int32" `756 
 f B "goto_address" 1 959 "void(int32 address)" `755 
@@ -1520,7 +1514,7 @@ f N "write_configuration_memory" 1 967 ""
 v L "dataptr" 1 967 "*int8" `773 
 v L "count" 1 967 "int8" `774 
 f B "write_configuration_memory" 1 967 "void(*int8 dataptr,int8 count)" `772  "INT"
-c L "write_configuration_memory" 1 1 4 "FUNCTION"
+c L "write_configuration_memory" 1 3 4 "FUNCTION"
 f N "enable_interrupts" 1 974 ""
 v L "interrupt" 1 974 "int16" `776 
 f B "enable_interrupts" 1 974 "void(int16 interrupt)" `775 
@@ -1626,26 +1620,21 @@ d G "INT_DMA6" 1 1080 "133"
 d G "INT_DMA7" 1 1081 "134"
 d G "INT_C1TX" 1 1082 "135"
 d G "INT_C2TX" 1 1083 "136"
-V G "SPI_Flag" 0 18 "sint8" `801 
-V G "Byte_Count" 0 18 "sint8" `802 
-V G "Rx" 0 18 "sint8" `803 
-V G "Tx" 0 18 "sint8" `804 
-V G "Cmand" 0 18 "sint8" `805 
-V G "ProbeID" 0 18 "sint8" `806 
-V G "count" 0 18 "sint8" `807 
-V G "Version" 0 19 "sint8" `808 
-V G "TempLowDisplay" 0 19 "sint8" `809 
-V G "VoltageLowDisplay" 0 19 "sint8" `810 
-V G "TempSetPointLow" 0 19 "sint8" `811 
-V G "HVSetPointLow" 0 19 "sint8" `812 
-V G "TempHiDisplay" 0 19 "sint8" `813 
-V G "HVSetPointHi" 0 20 "sint8" `814 
-V G "TempSetPointHi" 0 20 "sint8" `815 
-F N "spi2_slave_isr" 0 24 ""
-F G "spi2_slave_isr" 0 25 "void()" `816 
-F N "MAIN" 0 79 ""
-F G "MAIN" 0 80 "void()" `817 
-C L "MAIN" 0 85 1 "FUNCTION"
+D G "LED" 0 6 "PIN_A3"
+D G "LED2" 0 7 "PIN_A0"
+V G "SPI_Flag" 0 9 "sint8" `801 
+V G "Byte_Count" 0 9 "sint8" `802 
+V G "Rx" 0 9 "sint8" `803 
+V G "Tx" 0 9 "sint8" `804 
+V G "Cmand" 0 9 "sint8" `805 
+V G "ProbeID" 0 9 "sint8" `806 
+V G "count" 0 9 "sint8" `807 
+V G "Version" 0 10 "sint8" `808 
+F N "spi2_slave_isr" 0 15 ""
+F G "spi2_slave_isr" 0 16 "void()" `809 
+F N "MAIN" 0 68 ""
+F G "MAIN" 0 69 "void()" `810 
+C L "MAIN" 0 70 1 "FUNCTION"
 F B "reset_cpu" 0 0
 F B "abs" 1 0
 F B "sleep" 0 1

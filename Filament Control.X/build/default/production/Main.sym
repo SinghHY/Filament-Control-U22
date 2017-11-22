@@ -1,10 +1,10 @@
 W0      @SCRATCH
 W0L     _RETURN_
 W0 -W1  @READ_ROM_MEMORY.P1
-W0 -W1  @SPI_XFER_1.P2
+W0      @delay_ms1.P2
 W0      @delay_us1.P3
 W0 -W1  @DIV3232B.P4
-W0      @delay_ms1.P5
+W0 -W1  @SPI_XFER_1.P5
 W1      @SCRATCH
 W1      @READ_PACKED_MEMORY.P1
 W1      @WRITE_PACKED_MEMORY.P2
@@ -14,8 +14,8 @@ W2      @READ_PACKED_MEMORY.P3
 W2      @WRITE_PACKED_MEMORY.P4
 W2      @READ_ROM_MEMORY.P5
 W2      @SPI_XFER_IN_1.P6
-W3      @WRITE_PACKED_MEMORY.P1
-W3      @READ_ROM_MEMORY.P2
+W3      @READ_ROM_MEMORY.P1
+W3      @WRITE_PACKED_MEMORY.P2
 W3      @READ_PACKED_MEMORY.P3
 800     @SPIWRITE_1
 801     SPI_Flag
@@ -26,33 +26,27 @@ W3      @READ_PACKED_MEMORY.P3
 806     ProbeID
 807     count
 808     Version
-809     TempLowDisplay
-80A     VoltageLowDisplay
-80B     TempSetPointLow
-80C     HVSetPointLow
-80D     TempHiDisplay
-80E     HVSetPointHi
-80F     TempSetPointHi
 7780-77FF Stack
 
 ROM Allocation:
 000200  @SPI_XFER_IN_1
 00022C  spi2_slave_isr
-00034E  MAIN
-00034E  @cinit1
-0003AE  @cinit2
+000354  @delay_ms1
+000370  MAIN
+000370  @cinit1
+0003D0  @cinit2
 
 Project Directory:
     C:\GitRepo\Filament-Control-U22\Filament Control.X\
 
 Project Files:
-    Main.c                                                  [17-Oct-17 16:23  CRC=745F108D]
-    ..\..\..\Program Files (x86)\PICC\devices\33FJ256GP710A.h [21-Jul-17 13:47  CRC=7E46AFCA]
+    Main.c                                                  [22-Nov-17 16:25  CRC=ADCC96FB]
+    ..\..\..\Program Files (x86)\PICC\devices\33FJ256GP710A.h [21-Jul-17 12:47  CRC=7E46AFCA]
 
-Source signature=70EC7021
+Source signature=AA59F68F
 Program memory checksum=0000
 Program memory CRC=0000
-Hex file CRC=63A9
+Hex file CRC=BF12
 
 Units:
     Main (main)

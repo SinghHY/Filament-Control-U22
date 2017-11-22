@@ -1,29 +1,18 @@
-CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
+CCS PCD C Compiler, Version 5.074, 35380               22-Nov-17 16:25
 
                Filename:   C:\GitRepo\Filament-Control-U22\Filament Control.X\build\default\production\Main.lst
 
-               ROM used:   966 bytes (1%)
+               ROM used:   1012 bytes (1%)
                            Largest free fragment is 65536
-               RAM used:   144 (0%) at main() level
-                           144 (0%) worst case
-               Stack used: 42 locations (0 in main + 42 for interrupts)
+               RAM used:   138 (0%) at main() level
+                           138 (0%) worst case
+               Stack used: 44 locations (2 in main + 42 for interrupts)
                Stack size: 128
 
 *
-00000:  GOTO    34E
+00000:  GOTO    370
 *
 00056:  DATA    2C,02,00
-.................... /********************************************************************** 
-.................... * Filament Control for dsPIC 
-.................... * © Harpreet Singh, 2017 
-.................... * This version uses interrupts to free up the processor.  
-.................... * FileName:        main.c 
-.................... * Dependencies:    Header (33FJ256GP710A.h) files 
-.................... * Processor:       dsPIC33FJ256GP710A 
-.................... * Compiler:        CCS v5.074 or Higher 
-.................... * 
-.................... ************************************************************************/ 
-....................  
 .................... #include <33FJ256GP710A.h> 
 .................... //////////// Standard Header file for the DSPIC33FJ256GP710A device //////////////// 
 .................... /////////////////////////////////////////////////////////////////////////// 
@@ -41,6 +30,21 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 ....................  
 .................... #fuses XT,NOWDT,NOPROTECT 
 .................... #use delay(crystal = 8Mhz, clock = 100Mhz) 
+*
+00354:  CP0     W0
+00356:  BTSC.B  42.1
+00358:  BRA     36E
+0035A:  REPEAT  #34B
+0035C:  NOP     
+0035E:  REPEAT  #3FFE
+00360:  NOP     
+00362:  REPEAT  #3FFE
+00364:  NOP     
+00366:  REPEAT  #3FFE
+00368:  NOP     
+0036A:  DEC     W0,W0
+0036C:  BRA     NZ,35A
+0036E:  RETURN  
 .................... #use spi(SLAVE, SPI2, BITS = 8, MODE = 1, ENABLE = PIN_G9, stream = SPI_2) 
 *
 00200:  MOV     W5,[W15++]
@@ -66,10 +70,12 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 00228:  MOV     [--W15],W5
 0022A:  RETURN  
 ....................  
+.................... #define LED PIN_A3 
+.................... #define LED2 PIN_A0 
 ....................  
-.................... int8 SPI_Flag = 0, Byte_Count = 0, Rx, Tx, Cmand, ProbeID = 1, count = 0; 
-.................... int8 Version = 0x77, TempLowDisplay, VoltageLowDisplay, TempSetPointLow, HVSetPointLow, TempHiDisplay; 
-.................... int8  HVSetPointHi, TempSetPointHi; 
+.................... int8 SPI_Flag = 0, Byte_Count = 0, Rx, Tx, Cmand, ProbeID = 2, count = 0; 
+.................... int8 Version = 7; 
+....................  
 ....................  
 .................... #INT_SPI2 
 ....................  
@@ -88,7 +94,6 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 00240:  MOV.B   W0L,803
 ....................   Byte_Count++;  
 00242:  INC.B   0802
-....................    
 ....................   switch(Byte_Count) 
 00244:  MOV.B   802,W0L
 00246:  SE      W0,W0
@@ -101,7 +106,7 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 00254:  XOR     #7,W0
 00256:  BRA     Z,31A
 00258:  BRA     33C
-....................             { 
+....................         { 
 ....................             case 1: 
 ....................                 spi_prewrite(Version); 
 0025A:  MOV.B   808,W0L
@@ -115,33 +120,33 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 00268:  SE      W0,W0
 0026A:  CP      W0,#1
 0026C:  BRA     NZ,276
-....................                    TempSetPointLow = Rx; 
+....................                    count = Rx; 
 0026E:  MOV.B   803,W0L
-00270:  MOV.B   W0L,80B
+00270:  MOV.B   W0L,807
 00272:  GOTO    282
 ....................                 else if(Cmand == 2) 
 00276:  MOV.B   805,W0L
 00278:  SE      W0,W0
 0027A:  CP      W0,#2
 0027C:  BRA     NZ,282
-....................                    HVSetPointLow = Rx; 
+....................                    count = Rx; 
 0027E:  MOV.B   803,W0L
-00280:  MOV.B   W0L,80C
-....................  
+00280:  MOV.B   W0L,807
 ....................                 break; 
-00282:  GOTO    33C
-....................        
+00282:  GOTO    342
+....................  
 ....................             case 2:  
 ....................                 Cmand = Rx; 
 00286:  MOV.B   803,W0L
 00288:  MOV.B   W0L,805
+....................  
 ....................                 if(Cmand == 1) 
 0028A:  MOV.B   805,W0L
 0028C:  SE      W0,W0
 0028E:  CP      W0,#1
 00290:  BRA     NZ,2A2
-....................                    spi_prewrite(TempLowDisplay); 
-00292:  MOV.B   809,W0L
+....................                    spi_prewrite(25); 
+00292:  MOV.B   #19,W0L
 00294:  MOV.B   W0L,800
 00296:  MOV.B   800,W0L
 00298:  MOV.B   W0L,268
@@ -153,8 +158,8 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 002A4:  SE      W0,W0
 002A6:  CP      W0,#2
 002A8:  BRA     NZ,2BA
-....................                         spi_prewrite(VoltageLowDisplay); 
-002AA:  MOV.B   80A,W0L
+....................                         spi_prewrite(35); 
+002AA:  MOV.B   #23,W0L
 002AC:  MOV.B   W0L,800
 002AE:  MOV.B   800,W0L
 002B0:  MOV.B   W0L,268
@@ -173,20 +178,17 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 002C8:  MOV.B   W0L,268
 002CA:  MOV.B   #1,W0L
 002CC:  MOV.B   W0L,800
-....................                  
 ....................                 break; 
-002CE:  GOTO    33C
-....................              
+002CE:  GOTO    342
 ....................              
 ....................             case 3:  
-....................                   
 ....................                 if(Cmand == 1) 
 002D2:  MOV.B   805,W0L
 002D4:  SE      W0,W0
 002D6:  CP      W0,#1
 002D8:  BRA     NZ,2EA
-....................                    spi_prewrite(TempHiDisplay); 
-002DA:  MOV.B   80D,W0L
+....................                    spi_prewrite(45); 
+002DA:  MOV.B   #2D,W0L
 002DC:  MOV.B   W0L,800
 002DE:  MOV.B   800,W0L
 002E0:  MOV.B   W0L,268
@@ -219,126 +221,135 @@ CCS PCD C Compiler, Version 5.074, 35380               17-Oct-17 16:23
 00312:  MOV.B   #1,W0L
 00314:  MOV.B   W0L,800
 ....................                 break;       
-00316:  GOTO    33C
-....................              
-....................              
-....................             case 4:  
-....................                 if(Cmand == 1) 
-0031A:  MOV.B   805,W0L
-0031C:  SE      W0,W0
-0031E:  CP      W0,#1
-00320:  BRA     NZ,32A
-....................                    TempSetPointHi = Rx; 
-00322:  MOV.B   803,W0L
-00324:  MOV.B   W0L,80F
-00326:  GOTO    336
-....................                 else if(Cmand == 2) 
-0032A:  MOV.B   805,W0L
-0032C:  SE      W0,W0
-0032E:  CP      W0,#2
-00330:  BRA     NZ,336
-....................                     HVSetPointHi = Rx; 
-00332:  MOV.B   803,W0L
-00334:  MOV.B   W0L,80E
+00316:  GOTO    342
 ....................                  
+....................             case 4:  
 ....................                 Byte_Count = 0; 
-00336:  CLR.B   802
-....................                 break; 
-00338:  GOTO    33C
-....................               
-....................             } 
+0031A:  CLR.B   802
+....................                 if(Cmand == 1) 
+0031C:  MOV.B   805,W0L
+0031E:  SE      W0,W0
+00320:  CP      W0,#1
+00322:  BRA     NZ,32C
+....................                    count = Rx; 
+00324:  MOV.B   803,W0L
+00326:  MOV.B   W0L,807
+00328:  GOTO    338
+....................                 else if(Cmand == 2) 
+0032C:  MOV.B   805,W0L
+0032E:  SE      W0,W0
+00330:  CP      W0,#2
+00332:  BRA     NZ,338
+....................                     count = Rx; 
+00334:  MOV.B   803,W0L
+00336:  MOV.B   W0L,807
+....................                  
 ....................  
-0033C:  BCLR.B  88.1
-0033E:  MOV     #1A,W0
-00340:  REPEAT  #C
-00342:  MOV     [--W15],[W0--]
-00344:  MOV     [--W15],W0
-00346:  POP     32
-00348:  POP     36
-0034A:  POP     42
-0034C:  RETFIE  
+....................                 break;                 
+00338:  GOTO    342
+....................             default: 
+....................                 Byte_Count = 0; 
+0033C:  CLR.B   802
+....................                 break;         
+0033E:  GOTO    342
+....................         } 
+....................  
+00342:  BCLR.B  88.1
+00344:  MOV     #1A,W0
+00346:  REPEAT  #C
+00348:  MOV     [--W15],[W0--]
+0034A:  MOV     [--W15],W0
+0034C:  POP     32
+0034E:  POP     36
+00350:  POP     42
+00352:  RETFIE  
 .................... } 
 ....................  
 ....................  
 ....................  
 ....................  
 .................... void main() 
-0034E:  MOV     #7780,W15
-00350:  MOV     #77FF,W0
-00352:  MOV     W0,20
-00354:  NOP     
-00356:  BSET.B  81.7
-00358:  MOV     #30,W4
-0035A:  MOV     W4,746
-0035C:  CLR     744
-0035E:  DISI    #E
-00360:  MOV     #103,W0
-00362:  MOV     #743,W1
-00364:  MOV     #78,W2
-00366:  MOV     #9A,W3
-00368:  MOV.B   W2L,[W1]
-0036A:  MOV.B   W3L,[W1]
-0036C:  MOV.B   W0L,743
-0036E:  LSR     W0,#8,W0
-00370:  MOV     #742,W1
-00372:  MOV     #46,W2
-00374:  MOV     #57,W3
-00376:  MOV.B   W2L,[W1]
-00378:  MOV.B   W3L,[W1]
-0037A:  MOV.B   W0L,[W1]
-0037C:  CLR.B   800
-0037E:  BCLR.B  261.7
-00380:  BCLR.B  2E5.0
-00382:  BSET.B  2E4.7
-00384:  BSET.B  2E5.1
-00386:  BSET.B  2E4.6
-00388:  BCLR.B  260.6
-0038A:  BCLR.B  263.1
-0038C:  CLR     268
-0038E:  MOV     #1097,W4
-00390:  MOV     W4,262
-00392:  BSET.B  261.7
-00394:  BCLR.B  2E5.1
-00396:  BSET.B  2E9.1
-00398:  CLR.B   801
-0039A:  CLR.B   802
-0039C:  MOV.B   #1,W0L
-0039E:  MOV.B   W0L,806
-003A0:  CLR.B   807
-003A2:  MOV.B   #77,W0L
-003A4:  MOV.B   W0L,808
-003A6:  SETM    32C
-003A8:  SETM    32A
-003AA:  SETM    36C
-003AC:  SETM    36A
+*
+00370:  MOV     #7780,W15
+00372:  MOV     #77FF,W0
+00374:  MOV     W0,20
+00376:  NOP     
+00378:  BSET.B  81.7
+0037A:  MOV     #30,W4
+0037C:  MOV     W4,746
+0037E:  CLR     744
+00380:  DISI    #E
+00382:  MOV     #103,W0
+00384:  MOV     #743,W1
+00386:  MOV     #78,W2
+00388:  MOV     #9A,W3
+0038A:  MOV.B   W2L,[W1]
+0038C:  MOV.B   W3L,[W1]
+0038E:  MOV.B   W0L,743
+00390:  LSR     W0,#8,W0
+00392:  MOV     #742,W1
+00394:  MOV     #46,W2
+00396:  MOV     #57,W3
+00398:  MOV.B   W2L,[W1]
+0039A:  MOV.B   W3L,[W1]
+0039C:  MOV.B   W0L,[W1]
+0039E:  CLR.B   800
+003A0:  BCLR.B  261.7
+003A2:  BCLR.B  2E5.0
+003A4:  BSET.B  2E4.7
+003A6:  BSET.B  2E5.1
+003A8:  BSET.B  2E4.6
+003AA:  BCLR.B  260.6
+003AC:  BCLR.B  263.1
+003AE:  CLR     268
+003B0:  MOV     #1097,W4
+003B2:  MOV     W4,262
+003B4:  BSET.B  261.7
+003B6:  BCLR.B  2E5.1
+003B8:  BSET.B  2E9.1
+003BA:  CLR.B   801
+003BC:  CLR.B   802
+003BE:  MOV.B   #2,W0L
+003C0:  MOV.B   W0L,806
+003C2:  CLR.B   807
+003C4:  MOV.B   #7,W0L
+003C6:  MOV.B   W0L,808
+003C8:  SETM    32C
+003CA:  SETM    32A
+003CC:  SETM    36C
+003CE:  SETM    36A
 .................... {     
-....................  
-....................    enable_interrupts(INT_SPI2); 
-003AE:  BSET.B  98.1
-....................    enable_interrupts(INTR_GLOBAL); 
-003B0:  BCLR.B  81.7
-003B2:  CLR     42
-003B4:  BSET.B  81.7
-....................  
 ....................    output_float(PIN_G9); // SS as an input 
-003B6:  BSET.B  2E5.1
+003D0:  BSET.B  2E5.1
 ....................     
-....................    TempLowDisplay = 0; 
-003B8:  CLR.B   809
-....................    VoltageLowDisplay = 0; 
-003BA:  CLR.B   80A
-....................    TempHiDisplay = 1; 
-003BC:  MOV.B   #1,W0L
-003BE:  MOV.B   W0L,80D
-....................      
+....................    enable_interrupts(INT_SPI2); 
+003D2:  BSET.B  98.1
+....................    enable_interrupts(INTR_GLOBAL); 
+003D4:  BCLR.B  81.7
+003D6:  CLR     42
+003D8:  BSET.B  81.7
+....................     
+....................     
 ....................    while(1) 
 ....................     { 
-003C0:  GOTO    3C0
+....................        output_high(LED); 
+003DA:  BCLR.B  2C0.3
+003DC:  BSET.B  2C4.3
+....................        delay_ms(1000); 
+003DE:  MOV     #3E8,W0
+003E0:  CALL    354
+....................        output_low(LED); 
+003E4:  BCLR.B  2C0.3
+003E6:  BCLR.B  2C4.3
+....................        delay_ms(1000); 
+003E8:  MOV     #3E8,W0
+003EA:  CALL    354
+003EE:  GOTO    3DA
 ....................  
 ....................     } 
 .................... }    
 *
-003C4:  PWRSAV  #0
+003F2:  PWRSAV  #0
 
 Configuration Fuses:
    Word  1L: 00CF   NOWRTB NOBSS NORBS

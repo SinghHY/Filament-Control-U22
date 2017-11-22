@@ -11,6 +11,22 @@ Type=4
 1=build\default\production\Main.c
 [build\default\debug\Main.c]
 Type=4
+
+[fileformats]
+forcecoff=0
+
+[ProjectLog]
+Days=2
+D1=17-11-2017
+D1_L=4
+D1_L1=[40379]Project Opened.
+D1_L2=[40389]Project Closed.
+D1_L3=[41011]Project Opened.
+D1_L4=[41016]Project Closed.
+D2=21-11-2017
+D2_L=2
+D2_L1=[53362]Project Opened.
+D2_L2=[58915]Project Closed.
 [Units]
 Count=1
 1=Main (main)
