@@ -1,7 +1,7 @@
-#include <33FJ256GP710A.h>
+#include <33FJ256GP510.h>
 #fuses XT,NOWDT,NOPROTECT
 #device ADC = 12 
-#use delay(crystal = 8Mhz)
+#use delay(crystal = 40Mhz)
 #use spi(SLAVE, SPI2, BITS = 8, MODE = 1, ENABLE = PIN_G9, stream = SPI_2)
 
 

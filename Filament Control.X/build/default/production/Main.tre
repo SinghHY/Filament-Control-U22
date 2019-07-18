@@ -1,7 +1,31 @@
 ÀÄFilament Control
-   ÃÄMAIN  0/132  Ram=1
+   ÃÄMAIN  0/382  Ram=0
    ³  ÃÄ@cinit1  (Inline)  Ram=0
-   ³  ÃÄ@delay_ms1  0/28  Ram=1
-   ³  ÀÄ@delay_ms1  0/28  Ram=1
-   ÀÄspi2_slave_isr  0/296  Ram=0
+   ³  ³  ÀÄ@MULFF  0/196  Ram=59
+   ³  ÃÄ@SI64TOF64  0/106  Ram=0
+   ³  ÃÄ@MULFF64  0/272  Ram=0
+   ³  ÃÄ@F64TOSI64  0/94  Ram=0
+   ³  ÃÄ@SI64TOF64  0/106  Ram=0
+   ³  ÃÄ@MULFF64  0/272  Ram=0
+   ³  ÃÄ@F64TOSI64  0/94  Ram=0
+   ³  ÃÄ@SI64TOF64  0/106  Ram=0
+   ³  ÃÄ@MULFF64  0/272  Ram=0
+   ³  ÃÄ@F64TOSI64  0/94  Ram=0
+   ³  ÃÄ@SI64TOF64  0/106  Ram=0
+   ³  ÃÄ@MULFF64  0/272  Ram=0
+   ³  ÃÄ@F64TOSI64  0/94  Ram=0
+   ³  ÃÄLP_Filter  0/94  Ram=50
+   ³  ³  ÃÄ@ITOF  0/58  Ram=127
+   ³  ³  ÀÄ@MULFF  0/196  Ram=59
+   ³  ÃÄ@SFTOI  0/44  Ram=61
+   ³  ÃÄLP_Filter  0/94  Ram=50
+   ³  ³  ÀÄ*
+   ³  ÃÄ@SFTOI  0/44  Ram=61
+   ³  ÃÄLP_Filter  0/94  Ram=50
+   ³  ³  ÀÄ*
+   ³  ÃÄ@SFTOI  0/44  Ram=61
+   ³  ÃÄLP_Filter  0/94  Ram=50
+   ³  ³  ÀÄ*
+   ³  ÀÄ@SFTOI  0/44  Ram=61
+   ÀÄspi2_slave_isr  0/380  Ram=0
       ÀÄ@SPI_XFER_IN_1  0/44  Ram=5

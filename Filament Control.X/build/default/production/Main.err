@@ -1,5 +1,12 @@
-C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:76:1:  Warning#203  Condition always TRUE
-C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:9:40:  Warning#202  Variable never used:   Tx
-      Memory usage:   ROM=1%      RAM=0% - 0%
-      0 Errors,  2 Warnings.
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:130:1:  Warning#203  Condition always TRUE
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:21:6:  Warning#202  Variable never used:   SPI_Flag
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:21:40:  Warning#202  Variable never used:   Tx
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:21:63:  Warning#202  Variable never used:   count
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:25:7:  Warning#202  Variable never used:   Current1
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:25:17:  Warning#202  Variable never used:   Current2
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:25:27:  Warning#202  Variable never used:   Current3
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:25:37:  Warning#202  Variable never used:   Current4
+C:\GitRepo\Filament-Control-U22\Filament Control.X\Main.c:26:5:  Warning#202  Variable never used:   value
+      Memory usage:   ROM=1%      RAM=1% - 2%
+      0 Errors,  9 Warnings.
 Build Successful.

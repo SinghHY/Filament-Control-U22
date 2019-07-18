@@ -1,60 +1,98 @@
 W0      @SCRATCH
 W0L     _RETURN_
-W0 -W1  @READ_ROM_MEMORY.P1
-W0      @delay_ms1.P2
-W0      @delay_us1.P3
-W0 -W1  @DIV3232B.P4
-W0 -W1  @SPI_XFER_1.P5
+W0      @ITOF.P1
+W0 -W1  @READ_ROM_MEMORY.P2
+W0 -W1  @MULFF.P3
+W0 -W1  @SFTOI.P4
+W0      @delay_us1.P5
+W0 -W1  @DIV3232B.P6
+W0 -W3  @MULFF64.P7
+W0 -W1  @SPI_XFER_1.P8
+W0 -W3  @F64TOSI64.P9
+W0 -W3  @SI64TOF64.P10
+W0      @delay_ms1.P11
 W1      @SCRATCH
 W1      @READ_PACKED_MEMORY.P1
 W1      @WRITE_PACKED_MEMORY.P2
-W2 -W3  @DIV3232B.P1
-W2      @SPI_XFER_1.P2
-W2      @READ_PACKED_MEMORY.P3
-W2      @WRITE_PACKED_MEMORY.P4
-W2      @READ_ROM_MEMORY.P5
-W2      @SPI_XFER_IN_1.P6
-W3      @READ_ROM_MEMORY.P1
-W3      @WRITE_PACKED_MEMORY.P2
-W3      @READ_PACKED_MEMORY.P3
+W2 -W3  @MULFF.P1
+W2      @READ_ROM_MEMORY.P2
+W2 -W3  @DIV3232B.P3
+W2      @SPI_XFER_IN_1.P4
+W2      @SPI_XFER_1.P5
+W2      @READ_PACKED_MEMORY.P6
+W2      @WRITE_PACKED_MEMORY.P7
+W3      @READ_PACKED_MEMORY.P1
+W3      @READ_ROM_MEMORY.P2
+W3      @WRITE_PACKED_MEMORY.P3
+W4 -W7  @MULFF64.P1
 800     @SPIWRITE_1
 801     SPI_Flag
-802     Byte_Count
-803     Rx
-804     Tx
-805     Cmand
-806     ProbeID
-807     count
-808     Version
-7780-77FF Stack
+802-805 Alpha
+806-809 Cofficent
+80A     Byte_Count
+80B     Rx
+80C     Tx
+80D     Cmand
+80E     ProbeID
+80F     count
+810     Version
+811     PWM1
+812     PWM2
+813     PWM3
+814     PWM4
+815     AmpSPI1
+816     AmpSPI2
+817     AmpSPI3
+818     AmpSPI4
+81A-81D Current1
+81E-821 Current2
+822-825 Current3
+826-829 Current4
+82A-82B value
+82C-82D duty1
+82E-82F duty2
+830-831 duty3
+832-833 duty4
+834-835 LP_Filter.ch
+836-839 LP_Filter.Filter_Out
+83A-83B LP_Filter.i
+83C-83D LP_Filter.sum
+83E-865 LP_Filter.array
+4780-47FF Stack
 
 ROM Allocation:
 000200  @SPI_XFER_IN_1
 00022C  spi2_slave_isr
-000354  @delay_ms1
-000370  MAIN
-000370  @cinit1
-0003D0  @cinit2
+0003A8  @MULFF
+00046C  @SI64TOF64
+0004D6  @MULFF64
+0005E6  @F64TOSI64
+000644  @ITOF
+00067E  LP_Filter
+0006DC  @SFTOI
+000708  MAIN
+000708  @cinit1
+00076E  @cinit2
 
 Project Directory:
     C:\GitRepo\Filament-Control-U22\Filament Control.X\
 
 Project Files:
-    Main.c                                                  [22-Nov-17 16:25  CRC=ADCC96FB]
-    ..\..\..\Program Files (x86)\PICC\devices\33FJ256GP710A.h [21-Jul-17 12:47  CRC=7E46AFCA]
+    Main.c                                                  [18-Jul-19 09:34  CRC=A8DA445E]
+    ..\..\..\Program Files (x86)\PICC\devices\33FJ256GP510.h [14-Feb-17 14:54  CRC=50E31F6B]
 
-Source signature=AA59F68F
+Source signature=4AA08334
 Program memory checksum=0000
 Program memory CRC=0000
-Hex file CRC=BF12
+Hex file CRC=1ADE
 
 Units:
     Main (main)
 
 Compiler Settings:
-    Processor:      DSPIC33FJ256GP710A
+    Processor:      DSPIC33FJ256GP510
     Pointer Size:   16
-    ADC Range:      0-65535
+    ADC Range:      0-4095
     Opt Level:      9
     Short,Int,Long: SIGNED: 8,16,32
     Float,Double:   32,64

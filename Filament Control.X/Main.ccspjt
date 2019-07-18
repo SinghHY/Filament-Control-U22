@@ -1,7 +1,7 @@
 [PROJECT]
 Target=build\default\production\Main.hex
-Processor_Text=DSPIC33FJ256GP710A
-CCSVersion=5.074
+Processor_Text=DSPIC33FJ256GP510
+CCSVersion=5.069
 Compiler=PCD
 [Target Data]
 FileList=Main.c
@@ -16,7 +16,7 @@ Type=4
 forcecoff=0
 
 [ProjectLog]
-Days=2
+Days=4
 D1=17-11-2017
 D1_L=4
 D1_L1=[40379]Project Opened.
@@ -27,6 +27,14 @@ D2=21-11-2017
 D2_L=2
 D2_L1=[53362]Project Opened.
 D2_L2=[58915]Project Closed.
+D3=05-07-2019
+D3_L=2
+D3_L1=[39107]Project Opened.
+D3_L2=[42804]Project Closed.
+D4=10-07-2019
+D4_L=2
+D4_L1=[60449]Project Opened.
+D4_L2=[62909]Project Closed.
 [Units]
 Count=1
 1=Main (main)
