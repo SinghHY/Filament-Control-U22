@@ -37,9 +37,9 @@ void spi2_slave_isr(void)
   switch(Byte_Count)
             {
             case 1:
-                spi_prewrite(Version);
+                spi_prewrite(0);
                 if(Cmand == 1)
-                    spi_prewrite(0);
+                    spi_prewrite(AmpSPI4);
                 else if(Cmand == 2)
                     spi_prewrite(0);
                 break;
@@ -49,7 +49,7 @@ void spi2_slave_isr(void)
                 if(Cmand == 1)
                     spi_prewrite(0);
                 else if(Cmand == 2)
-                        spi_prewrite(3);
+                        spi_prewrite(AmpSPI2);
                 else if(Cmand == 3)
                         spi_prewrite(ProbeID);
                 break;
@@ -66,7 +66,7 @@ void spi2_slave_isr(void)
                    spi_prewrite(0);
                 else if(Cmand == 7)
                     {PWM2 = Rx;
-                    spi_prewrite(AmpSPI2);}
+                    spi_prewrite(AmpSPI3);}
                 break;      
             
             
@@ -76,10 +76,10 @@ void spi2_slave_isr(void)
                     spi_prewrite(0);
                 else if(Cmand == 2)
                     {PWM3 = Rx;
-                    spi_prewrite(AmpSPI3);}
+                    spi_prewrite(0);}
                 else if(Cmand == 7)
                     {PWM4 = Rx;
-                    spi_prewrite(AmpSPI4);}
+                    spi_prewrite(0);}
                 break;
                 
             default:
